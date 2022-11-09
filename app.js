@@ -9,7 +9,8 @@ const url = 'mongodb://127.0.0.1:27017/collage';
 const app = express();
 
 //rutas dinamicas
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}))//para usar rutas dinamicas
+app.use(express.json())//Esa expresion lee lo que vos pasas en el body de insomnia, y si es un json lo convierte a objeto de js
 
 app.get('/', async (req, res) => {
     const estudiantes = await Estudiante.find();
@@ -65,9 +66,10 @@ app.use(bodyParser.json()); */
 
 //=============================2-5=================================
 app.post('/api/estudiantes/nuevo' , async (req, res) => {
-    const newUsers = await Estudiante.insertMany(req.body);
+    const newUsers = await Estudiante.create(req.body);
     res.json(newUsers)     
-    console.log(newUsers)
+    console.log(req.body)
+  
 
 });
 
